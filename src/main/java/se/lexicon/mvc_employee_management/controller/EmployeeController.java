@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.lexicon.mvc_employee_management.model.Employee;
 import se.lexicon.mvc_employee_management.service.EmployeeService;
@@ -33,5 +34,15 @@ public class EmployeeController {
         employeeService.saveEmployee(employee);
         return "redirect:/";
     }
+
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model){
+        // get Employee from the service
+        Employee employee = employeeService.getEmployeeById(id);
+        // set Employee as a model attribute to pre-populate the form
+        model.addAttribute("employee", employee);
+        return "update_employee";
+    }
+
 
 }
